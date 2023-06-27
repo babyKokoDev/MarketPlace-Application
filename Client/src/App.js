@@ -1,12 +1,19 @@
-import { Button } from 'antd';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from './pages/Home'
+import Register from './pages/Register'
+import Login from './pages/Login'
+
 
 function App() {
   return (
-    <div className="App">
-      <h1>
-         MARKET PLACE
-      </h1>
-      <Button type="primary">Primary Button</Button>
+    <div>
+        <BrowserRouter>
+         <Routes>
+          <Route path='/' element = {<Home/>}/>
+          <Route path='/login' element = {<Login/>}/>
+          <Route path='/register' element = {<Register/>}/>
+         </Routes>
+        </BrowserRouter>
     </div>
   );
 }
