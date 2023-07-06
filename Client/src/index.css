@@ -9,3 +9,19 @@
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
+
+input {
+    height: 45px !important;
+    border: 1px solid #b9b9b9 !important;
+    
+}
+
+input:focus{
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1px solid #6a6a6a !important;
+}
+
+button{
+    height: 45px !important;
+}

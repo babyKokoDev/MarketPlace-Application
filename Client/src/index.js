@@ -16,6 +16,9 @@ root.render(
           colorPrimaryHover : '#40513B',
           borderRadius : '0'
         }
+      },
+      token : {
+          borderRadius : '2px'
       }
      }}
     >
