@@ -14,16 +14,12 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     req.body.password = hashedPassword;
 
-    // create and assign token
-    const token = jwt.sign({userId : user._id}, process.env.JWT_SECRET)
-
     //   Save New User
-    const newUser = req.body;
+    const newUser = new users(req.body);
     await newUser.save();
     res.send({
       success: true,
       message: "User saved successfully",
-      data : token
     });
   } catch (error) {
     res.send({
@@ -50,10 +46,14 @@ const userLogin = async (req, res) => {
       throw new Error("Invalid password");
     }
 
+    // create and assign token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+
     // Send Response
     res.send({
       success: true,
       message: "User Login successfully",
+      data: token,
     });
   } catch (error) {
     res.send({
