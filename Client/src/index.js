@@ -14,11 +14,12 @@ root.render(
         Button : {
           colorPrimary : '#40513B',
           colorPrimaryHover : '#40513B',
-          borderRadius : '0'
+          borderRadius : '0',
         }
       },
       token : {
-          borderRadius : '2px'
+          borderRadius : '2px',
+          colorPrimary : '#40513B',
       }
      }}
     >
