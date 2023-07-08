@@ -4,6 +4,7 @@ const { axiosInstance } = require("./axiosInstance");
 export const RegisterUser = async (payload) => {
   try {
     const response = await axiosInstance.post("/api/users/register", payload);
+    console.log(response)
     return response.data;
   } catch (error) {
     return error.message;
