@@ -42,6 +42,7 @@ const userLogin = async (req, res) => {
       req.body.password,
       user.password
     );
+    
     if (!validPassword) {
       throw new Error("Invalid password");
     }
