@@ -42,13 +42,13 @@ const userLogin = async (req, res) => {
       req.body.password,
       user.password
     );
-    
+
     if (!validPassword) {
       throw new Error("Invalid password");
     }
 
     // create and assign token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn : '1d'});
 
     // Send Response
     res.send({
