@@ -66,10 +66,11 @@ const userLogin = async (req, res) => {
 
 const getCurrentUser = async (req, res) => {
    try {
+      const user = await users.findById(req.body.userId)
       res.send({
          success : true,
          message : 'User fetched successfully',
-        //  data : user
+         data : user
       })
    } catch (error) {
       res.send({
