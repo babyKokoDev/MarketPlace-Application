@@ -64,7 +64,23 @@ const userLogin = async (req, res) => {
   }
 };
 
+const getCurrentUser = async (req, res) => {
+   try {
+      res.send({
+         success : true,
+         message : 'User fetched successfully',
+        //  data : user
+      })
+   } catch (error) {
+      res.send({
+        success : false,
+        message: error.message
+      })
+   }
+}
+
 module.exports = {
   registerUser,
   userLogin,
+  getCurrentUser,
 };
