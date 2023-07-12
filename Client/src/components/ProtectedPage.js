@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { message } from "antd";
 import { GetCurrentUser } from "../apicalls/users";
 
@@ -11,7 +11,7 @@ const ProtectedPage = ({children}) => {
             if (response.success) {
                 setUser(response.data);
             } else {
-                message.error(error.message);
+                message.error(response.message);
             }
         } catch (error) {
             message.error(error.message);
