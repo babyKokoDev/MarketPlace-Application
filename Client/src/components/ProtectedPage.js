@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { message } from "antd";
 import { GetCurrentUser } from "../apicalls/users";
 import { useNavigate } from "react-router-dom";
 
@@ -12,9 +11,7 @@ const ProtectedPage = ({ children }) => {
       const response = await GetCurrentUser();
       if (response.success) {
         setUser(response.data);
-      } else {
-        navigate("/login");
-      }
+      } 
     } catch (error) {
       navigate("/login");
     }
