@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Divider from "../../components/Divider";
 import { RegisterUser } from "../../apicalls/users";
 
@@ -24,6 +24,13 @@ const Register = () => {
       message.error(error.message);
     }
   };
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if (localStorage.getItem('token')){
+      navigate('/')
+    }
+  }, [])
 
   return (
     <div className="h-screen bg-primary flex justify-center items-center">
