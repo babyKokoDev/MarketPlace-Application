@@ -2,18 +2,24 @@ import React, { useEffect, useState } from "react";
 import { GetCurrentUser } from "../apicalls/users";
 import { useNavigate } from "react-router-dom";
 import "remixicon/fonts/remixicon.css";
+import { useDispatch } from "react-redux";
+import { SetLoader } from "../redux/loaderSlice";
 
 const ProtectedPage = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validateToken = async () => {
     try {
+      dispatch(SetLoader(true))
       const response = await GetCurrentUser();
+      dispatch(SetLoader(false))
       if (response.success) {
         setUser(response.data);
       }
     } catch (error) {
+      dispatch(SetLoader(false))
       navigate("/login");
     }
   };
