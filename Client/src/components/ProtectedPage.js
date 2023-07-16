@@ -36,7 +36,7 @@ const ProtectedPage = ({ children }) => {
             <i className="ri-user-3-fill cursor-pointer"></i>
             <span className="underline cursor-pointer">{user.name}</span>
             <i
-              class="ri-logout-box-r-line ml-10 cursor-pointer"
+              className="ri-logout-box-r-line ml-10 cursor-pointer"
               onClick={() => {
                 localStorage.removeItem("token");
                 navigate("/login");
