@@ -1,8 +1,13 @@
 import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
+  const { user } = useSelector(state => state.users)
   return (
-    <div className='bg-red-500 text-2xl font-bold text-center'>HOME</div>
+   <div>
+      <h1>HOME</h1>
+      {user && <h1>{user.name}</h1>}
+   </div>
   )
 }
 

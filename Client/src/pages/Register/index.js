@@ -14,29 +14,30 @@ const rules = [
 ];
 
 const Register = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const onFinish = async (values) => {
     try {
-      dispatch(SetLoader(true))
+      dispatch(SetLoader(true));
       const response = await RegisterUser(values);
-      dispatch(SetLoader(false))
+      navigate("/login");
+      dispatch(SetLoader(false));
       if (response.success) {
         message.success(response.message);
       } else {
         throw new Error(response.message);
       }
     } catch (error) {
-      dispatch(SetLoader(false))
+      dispatch(SetLoader(false));
       message.error(error.message);
     }
   };
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    if (localStorage.getItem('token')){
-      navigate('/')
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
     }
-  }, [])
+  }, []);
 
   return (
     <div className="h-screen bg-primary flex justify-center items-center">
