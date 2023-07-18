@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { GetCurrentUser } from "../apicalls/users";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "remixicon/fonts/remixicon.css";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../redux/loaderSlice";
 import { SetUsers } from "../redux/userSlice";
 
 const ProtectedPage = ({ children }) => {
-  const { user } = useSelector(state=> state.users)
+  const { user } = useSelector((state) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const validateToken = async () => {
     try {
-      dispatch(SetLoader(true))
+      dispatch(SetLoader(true));
       const response = await GetCurrentUser();
-      dispatch(SetLoader(false))
+      dispatch(SetLoader(false));
       if (response.success) {
         dispatch(SetUsers(response.data));
       }
     } catch (error) {
-      dispatch(SetLoader(false))
+      dispatch(SetLoader(false));
       navigate("/login");
     }
   };
@@ -38,10 +38,19 @@ const ProtectedPage = ({ children }) => {
       <div>
         {/* Header */}
         <div className="flex justify-between items-center bg-primary p-5">
-          <h1 className="text-2xl text-white">MARKET PLACE</h1>
+          <Link to="/" className="no-underline">
+            <h1 className="text-2xl text-white">MARKET PLACE</h1>
+          </Link>
           <div className="bg-white py-2 px-5 flex rounded gap-1 items-center">
             <i className="ri-user-3-fill cursor-pointer"></i>
-            <span className="underline cursor-pointer">{user.name}</span>
+            <span
+              onClick={() => {
+                navigate("/profile");
+              }}
+              className="underline cursor-pointer"
+            >
+              {user.name}
+            </span>
             <i
               className="ri-logout-box-r-line ml-10 cursor-pointer"
               onClick={() => {

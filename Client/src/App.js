@@ -3,8 +3,10 @@ import {useSelector} from 'react-redux'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import Profile from './pages/Profile'
 import ProtectedPage from "./components/ProtectedPage";
 import Spinner from "./components/Spinner";
+
 
 
 
@@ -18,6 +20,7 @@ function App() {
           <Route path='/' element = {<ProtectedPage><Home/></ProtectedPage>}/>
           <Route path='/login' element = {<Login/>}/>
           <Route path='/register' element = {<Register/>}/>
+          <Route path='/profile' element = {<ProtectedPage><Profile /></ProtectedPage>}/>
          </Routes>
         </BrowserRouter>
     </div>
