@@ -1,8 +1,8 @@
-import { Col, Form, Row, Tabs } from "antd";
+import { Col, Form, Row, Tabs, } from "antd";
 import Input from "antd/es/input/Input";
 import TextArea from "antd/es/input/TextArea";
 import Modal from "antd/es/modal/Modal";
-import React from "react";
+import React, { useRef } from "react";
 
 const additionalThings = [
   {
@@ -23,7 +23,18 @@ const additionalThings = [
   },
 ];
 
+const rules = [
+  {
+    required: true,
+    message: "Required",
+  },
+];
+
 const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
+  const onFinish = (values) => {
+    console.log(values);
+  };
+  const formRef = useRef(null);
   return (
     <Modal
       title=""
@@ -31,24 +42,26 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
       onCancel={() => setShowProductsForm(false)}
       centered
       width={1000}
+      okText="Save"
+      onOk={()=>formRef.current.submit()}
     >
       <Tabs defaultActiveKey="1">
         <Tabs.TabPane tab="General" key="1">
-          <Form layout="vertical">
-            <Form.Item label="Name" name="name">
+          <Form layout="vertical" ref={formRef} onFinish={onFinish}>
+            <Form.Item label="Name" name="name" rules={rules}>
               <Input type="text" />
             </Form.Item>
-            <Form.Item label="Description" name="description">
+            <Form.Item label="Description" name="description" rules={rules}>
               <TextArea type="text" />
             </Form.Item>
             <Row gutter={[16, 16]}>
               <Col span={8}>
-                <Form.Item label="Price" name="price">
+                <Form.Item label="Price" name="price" rules={rules}>
                   <Input type="number" />
                 </Form.Item>
               </Col>
               <Col span={8}>
-                <Form.Item label="Category" name="category">
+                <Form.Item label="Category" name="category" rules={rules}>
                   <select>
                     <option value="electronics">Electronics</option>
                     <option value="fashion">Fashion</option>
@@ -58,7 +71,7 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
                 </Form.Item>
               </Col>
               <Col span={8}>
-                <Form.Item label="Age" name="age">
+                <Form.Item label="Age" name="age" rules={rules}>
                   <Input type="number" />
                 </Form.Item>
               </Col>
@@ -66,10 +79,10 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
             <div className="flex gap-10">
               {additionalThings.map((item) => {
                 return (
-                    <Form.Item label={item.label} name={item.name}>
-                       <Input type="checkbox" />
-                    </Form.Item>
-                )
+                  <Form.Item label={item.label} name={item.name}>
+                    <Input type="checkbox" />
+                  </Form.Item>
+                );
               })}
             </div>
           </Form>
