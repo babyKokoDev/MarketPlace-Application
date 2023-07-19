@@ -1,4 +1,4 @@
-import { Col, Form, Row, Tabs, } from "antd";
+import { Col, Form, Row, Tabs } from "antd";
 import Input from "antd/es/input/Input";
 import TextArea from "antd/es/input/TextArea";
 import Modal from "antd/es/modal/Modal";
@@ -8,18 +8,22 @@ const additionalThings = [
   {
     label: "Bill Available",
     name: "billAvailable",
+    check : false
   },
   {
     label: "Warranty Available",
     name: "warrantyAvailable",
+    check : false
   },
   {
     label: "Accessories Available",
     name: "accessoriesAvailable",
+    check : false
   },
   {
     label: "Box Available",
     name: "boxAvailable",
+    check : false
   },
 ];
 
@@ -43,7 +47,7 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
       centered
       width={1000}
       okText="Save"
-      onOk={()=>formRef.current.submit()}
+      onOk={() => formRef.current.submit()}
     >
       <Tabs defaultActiveKey="1">
         <Tabs.TabPane tab="General" key="1">
@@ -63,6 +67,7 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
               <Col span={8}>
                 <Form.Item label="Category" name="category" rules={rules}>
                   <select>
+                    <option value="">Select</option>
                     <option value="electronics">Electronics</option>
                     <option value="fashion">Fashion</option>
                     <option value="home">Home</option>
@@ -79,8 +84,17 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
             <div className="flex gap-10">
               {additionalThings.map((item) => {
                 return (
-                  <Form.Item label={item.label} name={item.name}>
-                    <Input type="checkbox" />
+                  <Form.Item label={item.label} name={item.name} key={item.name}>
+                    <Input
+                      type="checkbox"
+                      value={item.name}
+                      onChange={(e) => {
+                        formRef.current.setFieldsValue({
+                          [item.name]: e.target.checked,
+                        });
+                      }}
+                      checked={formRef.current?.getFieldValue(item.name)}
+                    />
                   </Form.Item>
                 );
               })}
