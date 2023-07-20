@@ -20,7 +20,10 @@ const getProducts = async (req, res) => {
     try {
         
     } catch (error) {
-        
+        res.send({
+            success : false,
+            message : error.message
+        })
     }
 }
 
