@@ -8,22 +8,18 @@ const additionalThings = [
   {
     label: "Bill Available",
     name: "billAvailable",
-    check : false
   },
   {
     label: "Warranty Available",
     name: "warrantyAvailable",
-    check : false
   },
   {
     label: "Accessories Available",
     name: "accessoriesAvailable",
-    check : false
   },
   {
     label: "Box Available",
     name: "boxAvailable",
-    check : false
   },
 ];
 
