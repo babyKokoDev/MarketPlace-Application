@@ -18,7 +18,11 @@ const addProducts = async (req, res) => {
 
 const getProducts = async (req, res) => {
     try {
-        
+        const products = await Product.find()
+        res.send({
+          success: true,
+          products,
+        })
     } catch (error) {
         res.send({
             success : false,

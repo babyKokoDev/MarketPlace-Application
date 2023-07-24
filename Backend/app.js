@@ -5,11 +5,14 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const connectDb = require('./dB/connect')
 const port = process.env.PORT || 5000
 const userRoute = require('./routes/userRoute')
+const productsRoute = require('./routes/productsRoute')
+
 
 
 app.use(express.json())
 
 app.use('/api/users', userRoute)
+app.use('/api/products', productsRoute)
 
 
 
