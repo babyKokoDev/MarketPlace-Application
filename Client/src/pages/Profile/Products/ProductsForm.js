@@ -1,8 +1,11 @@
-import { Col, Form, Row, Tabs } from "antd";
+import { Col, Form, Row, Tabs, message } from "antd";
 import Input from "antd/es/input/Input";
 import TextArea from "antd/es/input/TextArea";
 import Modal from "antd/es/modal/Modal";
 import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { SetLoader } from "../../../redux/loaderSlice";
+import { addProducts } from "../../../apicalls/products";
 
 const additionalThings = [
   {
@@ -31,8 +34,24 @@ const rules = [
 ];
 
 const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
-  const onFinish = (values) => {
-    console.log(values);
+  const dispatch = useDispatch();
+  const {user} = useSelector(state=> state.users)
+  const onFinish = async (values) => {
+    try {
+      values.seller = user._id
+      values.status = "pending"
+      dispatch(SetLoader(true));
+      const response = await addProducts(values);
+      if (response.success) {
+        message.success(response.message);
+        setShowProductsForm(false);
+        dispatch(SetLoader(false))
+      } else {
+        message.error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
   };
   const formRef = useRef(null);
   return (
@@ -80,7 +99,11 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
             <div className="flex gap-10">
               {additionalThings.map((item) => {
                 return (
-                  <Form.Item label={item.label} name={item.name} key={item.name}>
+                  <Form.Item
+                    label={item.label}
+                    name={item.name}
+                    key={item.name}
+                  >
                     <Input
                       type="checkbox"
                       value={item.name}

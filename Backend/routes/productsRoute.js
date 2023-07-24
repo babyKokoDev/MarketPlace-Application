@@ -7,3 +7,5 @@ const router = express.Router()
 
 router.post('/add-product', authMiddleware, addProducts)
 router.get('/get-product', getProducts)
+
+module.exports = router
