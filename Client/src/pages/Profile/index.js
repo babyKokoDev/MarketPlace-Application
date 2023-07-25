@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tabs } from 'antd'
-import Products from './Products'
+import Products from '../Profile/Products'
 
 const index = () => {
   return (
