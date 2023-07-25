@@ -1,5 +1,5 @@
-import { Button, message } from "antd";
-import React, { useState } from "react";
+import { Button, Table, message } from "antd";
+import React, { useEffect, useState } from "react";
 import ProductsForm from "./ProductsForm";
 import { useDispatch } from "react-redux";
 import { SetLoader } from "../../../redux/loaderSlice";
@@ -7,20 +7,31 @@ import { getProducts } from "../../../apicalls/products";
 
 const Products = () => {
   const [showProductsForm, setShowProductsForm] = useState(false);
+  const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
 
   const getData = async () => {
     try {
       dispatch(SetLoader(true));
-      const response = await getProducts()
-      if (response.success){
-        
+      const response = await getProducts();
+      if (response.success) {
+        setProducts(response.products);
+        dispatch(SetLoader(false));
       }
     } catch (error) {
       dispatch(SetLoader(false));
       message.error(error.message);
     }
   };
+
+  useEffect(() => {
+
+       getData();
+
+  }, []);
+
+
+
   const columns = [
     {
       title: "Name",
@@ -63,6 +74,7 @@ const Products = () => {
           Add product
         </Button>
       </div>
+      <Table columns={columns} dataSource={products} />
       {showProductsForm && (
         <ProductsForm
           showProductsForm={showProductsForm}
