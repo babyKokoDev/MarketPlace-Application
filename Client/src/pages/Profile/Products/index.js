@@ -60,11 +60,19 @@ const Products = () => {
     {
       title: "Action",
       dataIndex: "action",
+      render : (text, record) => {
+         return (
+            <div className="flex gap-5">
+                  <i className="ri-delete-bin-line"></i>
+                  <i className="ri-pencil-line"></i>
+            </div>
+         )
+      }
     },
   ];
   return (
     <div>
-      <div className="flex justify-end">
+      <div className="flex justify-end mb-2">
         <Button
           type="default"
           onClick={() => {
