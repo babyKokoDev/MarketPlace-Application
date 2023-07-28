@@ -7,6 +7,7 @@ import { getProducts } from "../../../apicalls/products";
 
 const Products = () => {
   const [showProductsForm, setShowProductsForm] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
 
@@ -64,7 +65,11 @@ const Products = () => {
          return (
             <div className="flex gap-5">
                   <i className="ri-delete-bin-line"></i>
-                  <i className="ri-pencil-line"></i>
+                  <i className="ri-pencil-line cursor-pointer"
+                  onClick={()=>{
+                    setSelectedProduct(record)
+                    setShowProductsForm(true)}}
+                  ></i>
             </div>
          )
       }
@@ -77,6 +82,7 @@ const Products = () => {
           type="default"
           onClick={() => {
             setShowProductsForm(true);
+            setSelectedProduct(null)
           }}
         >
           Add product
@@ -87,6 +93,8 @@ const Products = () => {
         <ProductsForm
           showProductsForm={showProductsForm}
           setShowProductsForm={setShowProductsForm}
+          selectedProduct={selectedProduct}
+          getData={getData}
         />
       )}
     </div>

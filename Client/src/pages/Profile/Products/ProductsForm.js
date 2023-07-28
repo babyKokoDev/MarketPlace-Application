@@ -2,7 +2,7 @@ import { Col, Form, Row, Tabs, message } from "antd";
 import Input from "antd/es/input/Input";
 import TextArea from "antd/es/input/TextArea";
 import Modal from "antd/es/modal/Modal";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../../../redux/loaderSlice";
 import { addProducts } from "../../../apicalls/products";
@@ -33,9 +33,9 @@ const rules = [
   },
 ];
 
-const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
+const ProductsForm = ({ showProductsForm, setShowProductsForm, selectedProduct, getData }) => {
   const dispatch = useDispatch();
-  const {user} = useSelector(state=> state.users)
+  const { user } = useSelector(state=> state.users)
   const onFinish = async (values) => {
     try {
       values.seller = user._id
@@ -44,6 +44,7 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
       const response = await addProducts(values);
       if (response.success) {
         message.success(response.message);
+        getData()
         setShowProductsForm(false);
         dispatch(SetLoader(false))
       } else {
@@ -54,6 +55,13 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
     }
   };
   const formRef = useRef(null);
+
+  useEffect(()=>{
+     if (selectedProduct){
+        formRef.current.setFieldsValue(selectedProduct)
+     }
+  }, [selectedProduct])
+
   return (
     <Modal
       title=""
@@ -64,6 +72,10 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
       okText="Save"
       onOk={() => formRef.current.submit()}
     >
+      <div>
+        <h1 className="text-2xl text-primary text-center font-semibold uppercase">
+          {selectedProduct ? 'Edit Product' : 'Add Product'}
+        </h1>
       <Tabs defaultActiveKey="1">
         <Tabs.TabPane tab="General" key="1">
           <Form layout="vertical" ref={formRef} onFinish={onFinish}>
@@ -103,6 +115,7 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
                     label={item.label}
                     name={item.name}
                     key={item.name}
+                    valuePropName="checked"
                   >
                     <Input
                       type="checkbox"
@@ -124,6 +137,7 @@ const ProductsForm = ({ showProductsForm, setShowProductsForm }) => {
           <h1>Images</h1>
         </Tabs.TabPane>
       </Tabs>
+      </div>
     </Modal>
   );
 };
