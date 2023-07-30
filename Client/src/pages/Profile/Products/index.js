@@ -26,12 +26,8 @@ const Products = () => {
   };
 
   useEffect(() => {
-
-       getData();
-
+    getData();
   }, []);
-
-
 
   const columns = [
     {
@@ -61,18 +57,20 @@ const Products = () => {
     {
       title: "Action",
       dataIndex: "action",
-      render : (text, record) => {
-         return (
-            <div className="flex gap-5">
-                  <i className="ri-delete-bin-line"></i>
-                  <i className="ri-pencil-line cursor-pointer"
-                  onClick={()=>{
-                    setSelectedProduct(record)
-                    setShowProductsForm(true)}}
-                  ></i>
-            </div>
-         )
-      }
+      render: (text, record) => {
+        return (
+          <div className="flex gap-5">
+            <i className="ri-delete-bin-line cursor-pointer"></i>
+            <i
+              className="ri-pencil-line cursor-pointer"
+              onClick={() => {
+                setSelectedProduct(record);
+                setShowProductsForm(true);
+              }}
+            ></i>
+          </div>
+        );
+      },
     },
   ];
   return (
@@ -82,7 +80,7 @@ const Products = () => {
           type="default"
           onClick={() => {
             setShowProductsForm(true);
-            setSelectedProduct(null)
+            setSelectedProduct(null);
           }}
         >
           Add product

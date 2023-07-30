@@ -31,7 +31,23 @@ const getProducts = async (req, res) => {
     }
 }
 
+const editAProduct = async (req, res) => {
+   try {
+      await Product.findByIdAndUpdate(req.params.id, req.body)
+      res.send({
+        success: true,
+        message:'Product updated successfully'
+      })
+   } catch (error) {
+      res.send({
+        success : false,
+        message : error.message
+      })
+   }
+}
+
 module.exports = {
   addProducts,
-  getProducts
+  getProducts,
+  editAProduct
 };

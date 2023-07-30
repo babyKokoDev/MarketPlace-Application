@@ -17,3 +17,13 @@ export const getProducts = async () => {
         return error.message;
     }
 }
+
+export const updated = async (id, payload) => {
+  try {
+    const response = await axiosInstance.put(`/api/products/edit-product/${id}`, payload)
+    return response.data
+  } catch (error) {
+      return error.message
+  }
+   
+}
