@@ -4,6 +4,7 @@ import ProductsForm from "./ProductsForm";
 import { useDispatch } from "react-redux";
 import { SetLoader } from "../../../redux/loaderSlice";
 import { DeleteProduct, getProducts } from "../../../apicalls/products";
+import moment from "moment";
 
 const Products = () => {
   const [showProductsForm, setShowProductsForm] = useState(false);
@@ -70,6 +71,11 @@ const Products = () => {
     {
       title: "Status",
       dataIndex: "status",
+    },
+    {
+      title: "Added On",
+      dataIndex: "createdAt",
+      render : (text, record) => moment(record.createdAt).format("DD-MM-YYYY hh:mm A")
     },
     {
       title: "Action",

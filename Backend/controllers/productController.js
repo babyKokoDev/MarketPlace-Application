@@ -18,7 +18,7 @@ const addProducts = async (req, res) => {
 
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.find()
+        const products = await Product.find().sort({ createdAt: -1 })
         res.send({
           success: true,
           products,
