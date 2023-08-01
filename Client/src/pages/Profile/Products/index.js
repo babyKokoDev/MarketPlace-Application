@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ProductsForm from "./ProductsForm";
 import { useDispatch } from "react-redux";
 import { SetLoader } from "../../../redux/loaderSlice";
-import { getProducts } from "../../../apicalls/products";
+import { DeleteProduct, getProducts } from "../../../apicalls/products";
 
 const Products = () => {
   const [showProductsForm, setShowProductsForm] = useState(false);
@@ -18,6 +18,23 @@ const Products = () => {
       if (response.success) {
         setProducts(response.products);
         dispatch(SetLoader(false));
+      }
+    } catch (error) {
+      dispatch(SetLoader(false));
+      message.error(error.message);
+    }
+  };
+
+  const deleteProduct = async (id) => {
+    try {
+      dispatch(SetLoader(true));
+      const response = await DeleteProduct(id);
+      dispatch(SetLoader(false));
+      if (response.success) {
+        message.success(response.message);
+        getData();
+      } else {
+        message.error(response.message);
       }
     } catch (error) {
       dispatch(SetLoader(false));
@@ -60,7 +77,10 @@ const Products = () => {
       render: (text, record) => {
         return (
           <div className="flex gap-5">
-            <i className="ri-delete-bin-line cursor-pointer"></i>
+            <i
+              className="ri-delete-bin-line cursor-pointer"
+              onClick={() => deleteProduct(record._id)}
+            ></i>
             <i
               className="ri-pencil-line cursor-pointer"
               onClick={() => {

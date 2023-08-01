@@ -46,8 +46,24 @@ const editAProduct = async (req, res) => {
    }
 }
 
+const deleteProduct = async (req, res) => {
+  try {
+        await Product.findByIdAndDelete(req.params.id)
+        res.send({
+          success : true,
+          message : 'Product deleted successfully'
+        })
+  } catch (error) {
+      res.send({
+        success : false,
+        message : error.message
+      })
+  }
+}
+
 module.exports = {
   addProducts,
   getProducts,
-  editAProduct
+  editAProduct,
+  deleteProduct
 };
