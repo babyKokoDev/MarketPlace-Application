@@ -5,7 +5,7 @@ import Modal from "antd/es/modal/Modal";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../../../redux/loaderSlice";
-import { addProducts } from "../../../apicalls/products";
+import { addProducts, updateProducts } from "../../../apicalls/products";
 
 const additionalThings = [
   {
@@ -43,10 +43,16 @@ const ProductsForm = ({
   const { user } = useSelector((state) => state.users);
   const onFinish = async (values) => {
     try {
-      values.seller = user._id;
-      values.status = "pending";
       dispatch(SetLoader(true));
-      const response = await addProducts(values);
+      let response = null;
+      if (selectedProduct) {
+        response = await updateProducts(selectedProduct._id, values);
+      } else {
+        values.seller = user._id;
+        values.status = "pending";
+        response = await addProducts(values);
+      }
+      
       if (response.success) {
         message.success(response.message);
         getData();

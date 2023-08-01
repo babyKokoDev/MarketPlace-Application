@@ -18,7 +18,7 @@ export const getProducts = async () => {
     }
 }
 
-export const updated = async (id, payload) => {
+export const updateProducts = async (id, payload) => {
   try {
     const response = await axiosInstance.put(`/api/products/edit-product/${id}`, payload)
     return response.data
