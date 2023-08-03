@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
 import Upload from "antd/es/upload/Upload";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ const Images = ({ selectedProduct, getData, setShowProductForm }) => {
   const upLoad = () => {
     try {
       dispatch(SetLoader(true));
-      // Upload Image Logic
+      // Upload Image to Cloudinary and Get the URL
     } catch (error) {
       dispatch(SetLoader(false));
       message.error(error.message);
