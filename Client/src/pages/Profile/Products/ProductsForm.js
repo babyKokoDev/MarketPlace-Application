@@ -2,10 +2,11 @@ import { Col, Form, Row, Tabs, message } from "antd";
 import Input from "antd/es/input/Input";
 import TextArea from "antd/es/input/TextArea";
 import Modal from "antd/es/modal/Modal";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../../../redux/loaderSlice";
 import { addProducts, updateProducts } from "../../../apicalls/products";
+import Images from "./Images";
 
 const additionalThings = [
   {
@@ -39,6 +40,7 @@ const ProductsForm = ({
   selectedProduct,
   getData,
 }) => {
+  const [selectedTab, setSelectedTab] = useState('1')
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.users);
   const onFinish = async (values) => {
@@ -82,12 +84,13 @@ const ProductsForm = ({
       width={1000}
       okText="Save"
       onOk={() => formRef.current.submit()}
+      {...(selectedTab === "2" && {footer : false})}
     >
       <div>
         <h1 className="text-2xl text-primary text-center font-semibold uppercase">
           {selectedProduct ? "Edit Product" : "Add Product"}
         </h1>
-        <Tabs defaultActiveKey="1">
+        <Tabs defaultActiveKey="1" activeKey={selectedTab} onChange={(key)=>setSelectedTab(key)}>
           <Tabs.TabPane tab="General" key="1">
             <Form layout="vertical" ref={formRef} onFinish={onFinish}>
               <Form.Item label="Name" name="name" rules={rules}>
@@ -120,12 +123,12 @@ const ProductsForm = ({
                 </Col>
               </Row>
               <div className="flex gap-10">
-                {additionalThings.map((item) => {
+                {additionalThings.map((item, index) => {
                   return (
                     <Form.Item
                       label={item.label}
                       name={item.name}
-                      key={item.name}
+                      key={index}
                       valuePropName="checked"
                     >
                       <Input
@@ -144,8 +147,8 @@ const ProductsForm = ({
               </div>
             </Form>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Images" key="2">
-            <h1>Images</h1>
+          <Tabs.TabPane tab="Images" key="2" disabled={!selectedProduct}>
+           <Images selectedProduct={selectedProduct} getData={getData} setShowProductForm={setShowProductsForm} />
           </Tabs.TabPane>
         </Tabs>
       </div>
