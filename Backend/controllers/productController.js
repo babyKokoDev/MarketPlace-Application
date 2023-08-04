@@ -1,4 +1,5 @@
 const Product = require("../models/productsModel");
+const cloudinary  = require("../dB/cloudinaryConfig")
 
 const addProducts = async (req, res) => {
   try {
@@ -61,9 +62,30 @@ const deleteProduct = async (req, res) => {
   }
 }
 
+const  uploadImage = async (req, res) => {
+  try {
+      const result = await cloudinary.uploader.upload(req.file.path, {folder : "marketplace",})
+      const productId = req.body.productId
+      await Product.findByIdAndUpdate(productId, {
+        $push : { images : result.secure_url }
+      })
+      res.send({
+        success : true,
+        message : 'Image uploaded successfully',
+        data : result.secure_url
+      })
+  } catch (error) {
+    res.send({
+      success : false,
+      message : error.message
+    })
+  }
+}
+
 module.exports = {
   addProducts,
   getProducts,
   editAProduct,
-  deleteProduct
+  deleteProduct,
+  uploadImage
 };
