@@ -1,8 +1,19 @@
+import { Tabs } from 'antd'
 import React from 'react'
+import Products from './Products'
 
 const Admin = () => {
   return (
-    <div>Admin</div>
+    <div>
+        <Tabs>
+            <Tabs.TabPane tab="Products" key="1">
+                  <Products />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="Users" key="2">
+                  <h1>Users</h1>
+            </Tabs.TabPane>
+        </Tabs>
+    </div>
   )
 }
 

@@ -24,7 +24,7 @@ const getProducts = async (req, res) => {
         if (seller){
           filters.seller = seller
         }
-        const products = await Product.find(filters).sort({ createdAt: -1 })
+        const products = await Product.find(filters).populate('seller').sort({ createdAt: -1 })
         res.send({
           success: true,
           products,
