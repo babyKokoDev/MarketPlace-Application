@@ -45,7 +45,11 @@ const ProtectedPage = ({ children }) => {
             <i className="ri-user-3-fill cursor-pointer"></i>
             <span
               onClick={() => {
-                navigate("/profile");
+                if (user.role === "user") {
+                  navigate("/profile");
+                } else {
+                  navigate("/admin");
+                }
               }}
               className="underline cursor-pointer"
             >
