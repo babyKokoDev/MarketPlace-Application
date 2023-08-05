@@ -19,7 +19,12 @@ const addProducts = async (req, res) => {
 
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.find().sort({ createdAt: -1 })
+        const {seller, categories = [], age = []} = req.body
+        let filters = {}
+        if (seller){
+          filters.seller = seller
+        }
+        const products = await Product.find(filters).sort({ createdAt: -1 })
         res.send({
           success: true,
           products,

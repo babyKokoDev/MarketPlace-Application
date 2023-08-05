@@ -9,9 +9,9 @@ export const addProducts = async (payload) => {
   }
 };
 
-export const getProducts = async () => {
+export const getProducts = async (filters) => {
     try {
-        const response = await axiosInstance.get('/api/products/get-product')
+        const response = await axiosInstance.post('/api/products/get-product', filters)
         return response.data
     } catch (error) {
         return error.message;

@@ -11,7 +11,7 @@ const router = express.Router();
 const multer = require("multer");
 
 router.post("/add-product", authMiddleware, addProducts);
-router.get("/get-product", getProducts);
+router.post("/get-product", getProducts);
 router.put("/edit-product/:id", authMiddleware, editAProduct);
 router.delete("/delete-product/:id", authMiddleware, deleteProduct);
 

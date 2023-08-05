@@ -23,7 +23,7 @@ const Images = ({ selectedProduct, getData, setShowProductForm }) => {
         message.success(response.message);
         setImages([...images, response.data]);
         setShowPreview(false);
-        setFile(null)
+        setFile(null);
         getData();
       }
     } catch (error) {
