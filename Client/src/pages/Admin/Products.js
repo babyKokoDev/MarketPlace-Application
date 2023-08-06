@@ -17,13 +17,15 @@ const Products = () => {
       if (response.success) {
         setProducts(response.products);
         dispatch(SetLoader(false));
-        console.log(response.products)
+        console.log(response.products);
       }
     } catch (error) {
       dispatch(SetLoader(false));
       message.error(error.message);
     }
   };
+
+  const onStatusUpdate = (id, status) => {};
 
   useEffect(() => {
     getData();
@@ -37,9 +39,9 @@ const Products = () => {
     {
       title: "Seller",
       dataIndex: "name",
-      render : (text, record) => {
-        return record.seller.name
-      }
+      render: (text, record) => {
+        return record.seller.name;
+      },
     },
     {
       title: "Description",
@@ -71,9 +73,54 @@ const Products = () => {
       title: "Action",
       dataIndex: "action",
       render: (text, record) => {
-        return <div className="flex gap-5"></div>;
+        const { status, _id } = record;
+        return (
+          <div className="flex gap-3">
+            {status === "pending" && (
+              <span
+                className="underline cursor-pointer"
+                onClick={() => {
+                  onStatusUpdate(_id, "approved");
+                }}
+              >
+                Approve
+              </span>
+            )}
+            {status === "pending" && (
+              <span
+                className="underline cursor-pointer"
+                onClick={() => {
+                  onStatusUpdate(_id, "rejected");
+                }}
+              >
+                Reject
+              </span>
+            )}
+            {status === "approved" && (
+              <span
+                className="underline cursor-pointer"
+                onClick={() => {
+                  onStatusUpdate(_id, "blocked");
+                }}
+              >
+                Block
+              </span>
+            )}
+            {status === "blocked" && (
+              <span
+                className="underline cursor-pointer"
+                onClick={() => {
+                  onStatusUpdate(_id, "approved");
+                }}
+              >
+                Unblock
+              </span>
+            )}
+          </div>
+        );
       },
     },
+    
   ];
   return (
     <div>
