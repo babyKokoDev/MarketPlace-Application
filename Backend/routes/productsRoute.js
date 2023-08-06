@@ -5,6 +5,7 @@ const {
   editAProduct,
   deleteProduct,
   uploadImage,
+  updateProductStatus,
 } = require("../controllers/productController");
 const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
@@ -25,4 +26,7 @@ const storage = multer.diskStorage({
 
 router.post('/upload-image-to-product', authMiddleware, multer({storage : storage}).single('file'), uploadImage)
 
+
+// Update product status from admin 
+router.put('/update-product-status/:id', authMiddleware, updateProductStatus)
 module.exports = router;

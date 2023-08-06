@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { SetLoader } from "../../redux/loaderSlice";
-import { getProducts } from "../../apicalls/products";
+import { getProducts, updateProductStatus } from "../../apicalls/products";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -25,7 +25,22 @@ const Products = () => {
     }
   };
 
-  const onStatusUpdate = (id, status) => {};
+  const onStatusUpdate = async (id, status) => {
+      try {
+        dispatch(SetLoader(true))
+        const response = await updateProductStatus(id, status)
+        dispatch(SetLoader(false))
+        if (response.success) {
+          message.success(response.message)
+          getData()
+        } else {
+          throw new Error(response.message)
+        }
+      } catch (error) {
+        dispatch(SetLoader(false))
+        message.error(error.message)
+      }
+  };
 
   useEffect(() => {
     getData();

@@ -87,10 +87,27 @@ const  uploadImage = async (req, res) => {
   }
 }
 
+const updateProductStatus = async (req, res) => {
+  try {
+      const { status } = req.body
+      await Product.findByIdAndUpdate(req.params.id, { status })
+      res.send({
+        success: true,
+        message : 'Product status updated successfully'
+      })
+  } catch (error) {
+    res.send({
+      success : false,
+      message : error.message
+    })
+  }
+}
+
 module.exports = {
   addProducts,
   getProducts,
   editAProduct,
   deleteProduct,
-  uploadImage
+  uploadImage,
+  updateProductStatus
 };
