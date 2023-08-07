@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, userLogin, getCurrentUser, getAllUsers } = require("../controllers/controller");
+const { registerUser, userLogin, getCurrentUser, getAllUsers, updateUser } = require("../controllers/controller");
 const authMiddleware = require("../middleware/authMiddleware");
 
 
@@ -15,5 +15,8 @@ router.get("/get-current-user", authMiddleware, getCurrentUser)
 
 // Get All Users
 router.get("/get-users", authMiddleware, getAllUsers)
+
+// Update user Role
+router.put("/update-user-status/:id", authMiddleware, updateUser)
 
 module.exports = router;

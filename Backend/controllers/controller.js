@@ -98,9 +98,25 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    await users.findByIdAndUpdate(req.params.id, req.body);
+    res.send({
+      success: true,
+      message: "user status updated successfully",
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   userLogin,
   getCurrentUser,
   getAllUsers,
+  updateUser,
 };

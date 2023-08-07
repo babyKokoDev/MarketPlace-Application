@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { SetLoader } from "../../redux/loaderSlice";
-import { GetAllUsers } from "../../apicalls/users";
-import { updateProductStatus } from "../../apicalls/products";
+import { GetAllUsers, UpdateUserStatus } from "../../apicalls/users";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -28,7 +27,7 @@ const Users = () => {
   const onStatusUpdate = async (id, status) => {
       try {
         dispatch(SetLoader(true))
-        const response = await updateProductStatus(id, status)
+        const response = await UpdateUserStatus(id, status)
         dispatch(SetLoader(false))
         if (response.success) {
           message.success(response.message)
@@ -83,27 +82,7 @@ const Users = () => {
         const { status, _id } = record;
         return (
           <div className="flex gap-3">
-            {status === "pending" && (
-              <span
-                className="underline cursor-pointer"
-                onClick={() => {
-                  onStatusUpdate(_id, "approved");
-                }}
-              >
-                Approve
-              </span>
-            )}
-            {status === "pending" && (
-              <span
-                className="underline cursor-pointer"
-                onClick={() => {
-                  onStatusUpdate(_id, "rejected");
-                }}
-              >
-                Reject
-              </span>
-            )}
-            {status === "approved" && (
+            {status === "active" && (
               <span
                 className="underline cursor-pointer"
                 onClick={() => {
@@ -117,7 +96,7 @@ const Users = () => {
               <span
                 className="underline cursor-pointer"
                 onClick={() => {
-                  onStatusUpdate(_id, "approved");
+                  onStatusUpdate(_id, "active");
                 }}
               >
                 Unblock
