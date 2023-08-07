@@ -3,20 +3,21 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { SetLoader } from "../../redux/loaderSlice";
-import { getProducts, updateProductStatus } from "../../apicalls/products";
+import { GetAllUsers } from "../../apicalls/users";
+import { updateProductStatus } from "../../apicalls/products";
 
-const Products = () => {
-  const [products, setProducts] = useState([]);
-  const { user } = useSelector((state) => state.users);
+const Users = () => {
+  const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
 
   const getData = async () => {
     try {
       dispatch(SetLoader(true));
-      const response = await getProducts(null);
+      const response = await GetAllUsers();
+      dispatch(SetLoader(false));
       if (response.success) {
-        setProducts(response.products);
-        dispatch(SetLoader(false));
+        setUsers(response.data);
+        
       }
     } catch (error) {
       dispatch(SetLoader(false));
@@ -47,31 +48,26 @@ const Products = () => {
 
   const columns = [
     {
-      title: "Product",
+      title: "Name",
       dataIndex: "name",
     },
     {
-      title: "Seller",
-      dataIndex: "name",
-      render: (text, record) => {
-        return record.seller.name;
-      },
+      title: "Email",
+      dataIndex: "email",
     },
     {
-      title: "Description",
-      dataIndex: "description",
+      title: "Role",
+      dataIndex: "role",
+      render : (text, record) => {
+        return record.role.toUpperCase()
+      }
     },
     {
-      title: "Price",
-      dataIndex: "price",
-    },
-    {
-      title: "Category",
-      dataIndex: "category",
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
+      title: "Created At",
+      dataIndex: "createdAt",
+      render : (text, record) => {
+        return moment(record.createdAt).format("DD-MM-YYYY hh:mm A")
+      }
     },
     {
       title: "Status",
@@ -79,12 +75,6 @@ const Products = () => {
       render : (text, record) => {
         return record.status.toUpperCase()
       }
-    },
-    {
-      title: "Added On",
-      dataIndex: "createdAt",
-      render: (text, record) =>
-        moment(record.createdAt).format("DD-MM-YYYY hh:mm A"),
     },
     {
       title: "Action",
@@ -141,9 +131,9 @@ const Products = () => {
   ];
   return (
     <div>
-      <Table columns={columns} dataSource={products} />
+      <Table columns={columns} dataSource={users} />
     </div>
   );
 };
 
-export default Products;
+export default Users;

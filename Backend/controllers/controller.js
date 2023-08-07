@@ -48,7 +48,9 @@ const userLogin = async (req, res) => {
     }
 
     // create and assign token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn : '1d'});
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
 
     // Send Response
     res.send({
@@ -65,23 +67,40 @@ const userLogin = async (req, res) => {
 };
 
 const getCurrentUser = async (req, res) => {
-   try {
-      const user = await users.findById(req.body.userId)
-      res.send({
-         success : true,
-         message : 'User fetched successfully',
-         data : user
-      })
-   } catch (error) {
-      res.send({
-        success : false,
-        message: error.message
-      })
-   }
-}
+  try {
+    const user = await users.findById(req.body.userId);
+    res.send({
+      success: true,
+      message: "User fetched successfully",
+      data: user,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getAllUsers = async (req, res) => {
+  try {
+    const Users = await users.find();
+    res.send({
+      success: true,
+      message: "Users fetched successfully",
+      data: Users,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 module.exports = {
   registerUser,
   userLogin,
   getCurrentUser,
+  getAllUsers,
 };
