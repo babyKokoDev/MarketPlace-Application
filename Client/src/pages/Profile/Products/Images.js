@@ -3,7 +3,7 @@ import Upload from "antd/es/upload/Upload";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { SetLoader } from "../../../redux/loaderSlice";
-import { uploadProductImage } from "../../../apicalls/products";
+import { updateProducts, uploadProductImage } from "../../../apicalls/products";
 
 const Images = ({ selectedProduct, getData, setShowProductForm }) => {
   const [showPreview, setShowPreview] = useState(true);
@@ -31,8 +31,42 @@ const Images = ({ selectedProduct, getData, setShowProductForm }) => {
       message.error(error.message);
     }
   };
+
+  // Delete an Image
+  const deleteImage = async (image) => {
+    try {
+      const updatedImageArray = images.filter((img) => img !== image);
+      const updatedProduct = { ...selectedProduct, images: updatedImageArray };
+      const response = await updateProducts(
+        selectedProduct._id,
+        updatedProduct
+      );
+      if (response.success) {
+        message.success(response.message);
+        setImages(updatedImageArray);
+        getData();
+      } else {
+        dispatch(SetLoader(true));
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      dispatch(SetLoader(false));
+      message.error(error.message);
+    }
+  };
   return (
     <div>
+      <div className="flex gap-5 mb-5">
+        {images.map((image, index) => (
+          <div className="flex gap-2 border border-solid border-gray-500 rounded p-2 items-end">
+            <img src={image} alt="" className="h-20 w-20 object-cover" />
+            <i
+              className="ri-delete-bin-line cursor-pointer"
+              onClick={() => deleteImage(image)}
+            ></i>
+          </div>
+        ))}
+      </div>
       <Upload
         listType="picture"
         beforeUpload={() => false}
@@ -42,15 +76,6 @@ const Images = ({ selectedProduct, getData, setShowProductForm }) => {
         }}
         showUploadList={showPreview}
       >
-        <div className="flex gap-5 mb-5">
-          {images.map((image, index) => (
-            <div className="flex gap-2 border border-solid border-gray-500 rounded p-2 items-end">
-              <img src={image} alt="" className="h-20 w-20 object-cover" />
-              <i className="ri-delete-bin-line cursor-pointer"></i>
-            </div>
-          ))}
-        </div>
-
         <Button type="dashed">Upload Image</Button>
       </Upload>
 
