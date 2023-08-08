@@ -37,6 +37,11 @@ const userLogin = async (req, res) => {
       throw new Error("User not found");
     }
 
+    // check if user is active
+    if(user.status !== 'active'){
+      throw new Error('The user is blocked, please contact the admin')
+    }
+
     // Compare Password
     const validPassword = await bcrypt.compare(
       req.body.password,
