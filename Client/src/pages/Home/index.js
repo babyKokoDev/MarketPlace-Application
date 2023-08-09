@@ -37,7 +37,7 @@ const Home = () => {
       <div className="grid grid-cols-5 gap-5">
       {
         products?.map((product, index)=>{
-          return <div className="border border-gray-300 rounded border-solid flex flex-col gap-2 pb-2 cursor-pointer" onClick={()=>{
+          return <div key={index} className="border border-gray-300 rounded border-solid flex flex-col gap-2 pb-2 cursor-pointer" onClick={()=>{
             navigate(`/products/${product._id}`)
           }}>
              <img src={product.images[0]} className="w-full h-40 object-cover" alt="" />
