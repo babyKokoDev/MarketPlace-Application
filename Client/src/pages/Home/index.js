@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const [filters, setFilers] = useState({
+  const [filters, setFilters] = useState({
     status: "approved",
   });
   const { user } = useSelector((state) => state.users);
