@@ -103,11 +103,27 @@ const updateProductStatus = async (req, res) => {
   }
 }
 
+const getProductById = async (req, res) => {
+  try {
+     const product = await Product.findById(req.params.id).populate('seller')
+     res.send({
+       success: true,
+       data : product
+     })
+  } catch (error) {
+    res.send({
+      success : false,
+      message : error.message
+    })
+  }
+}
+
 module.exports = {
   addProducts,
   getProducts,
   editAProduct,
   deleteProduct,
   uploadImage,
-  updateProductStatus
+  updateProductStatus,
+  getProductById
 };

@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import ProtectedPage from "./components/ProtectedPage";
 import Spinner from "./components/Spinner";
 import Admin from "./pages/Admin";
+import ProductInfo from "./pages/ProductInfo";
 
 function App() {
   const { loading } = useSelector((state) => state.loaders);
@@ -20,6 +21,14 @@ function App() {
             element={
               <ProtectedPage>
                 <Home />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/products/:id"
+            element={
+              <ProtectedPage>
+                <ProductInfo />
               </ProtectedPage>
             }
           />
