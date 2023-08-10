@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../../../redux/loaderSlice";
 import { DeleteProduct, getProducts } from "../../../apicalls/products";
 import moment from "moment";
+import Bids from "./Bids";
 
 const Products = () => {
   const [showProductsForm, setShowProductsForm] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showBids, setShowBids] = useState(false);
   const [products, setProducts] = useState([]);
   const { user } = useSelector((state)=> state.users)
   const dispatch = useDispatch();
@@ -83,7 +85,7 @@ const Products = () => {
       dataIndex: "action",
       render: (text, record) => {
         return (
-          <div className="flex gap-5">
+          <div className="flex gap-5 items-center">
             <i
               className="ri-delete-bin-line cursor-pointer"
               onClick={() => deleteProduct(record._id)}
@@ -95,6 +97,10 @@ const Products = () => {
                 setShowProductsForm(true);
               }}
             ></i>
+            <span className="underline cursor-pointer" onClick={()=> {
+              setSelectedProduct(record)
+              setShowBids(true)
+            }}>Show Bids</span>
           </div>
         );
       },
@@ -122,6 +128,11 @@ const Products = () => {
           getData={getData}
         />
       )}
+      {
+        showBids && (
+          <Bids showBidsModal={showBids} setShowBidsModal={setShowBids} selectedProduct={selectedProduct} />
+        )
+      }
     </div>
   );
 };
