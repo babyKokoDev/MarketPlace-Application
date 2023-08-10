@@ -6,4 +6,6 @@ const authMiddleware = require('../middleware/authMiddleware')
 router.post('/place-new-bid', authMiddleware, addBids)
 
 // get all bids
-router.get('/get-all-bids', authMiddleware, getBids)
+router.post('/get-all-bids', authMiddleware, getBids)
+
+module.exports = router

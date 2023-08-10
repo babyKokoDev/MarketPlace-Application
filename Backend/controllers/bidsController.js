@@ -6,7 +6,7 @@ const addBids = async (req, res) => {
         await newBid.save()
         res.send({
             success: true,
-            message : 'Bids saved successfully'
+            message : 'Bids added successfully'
         })
     } catch (error) {
         res.send({

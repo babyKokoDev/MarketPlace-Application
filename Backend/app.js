@@ -6,6 +6,7 @@ const connectDb = require('./dB/connect')
 const port = process.env.PORT || 5000
 const userRoute = require('./routes/userRoute')
 const productsRoute = require('./routes/productsRoute')
+const bidsRoute = require('./routes/bidsRoute')
 
 
 
@@ -13,6 +14,7 @@ app.use(express.json())
 
 app.use('/api/users', userRoute)
 app.use('/api/products', productsRoute)
+app.use('/api/bids', bidsRoute)
 
 
 
