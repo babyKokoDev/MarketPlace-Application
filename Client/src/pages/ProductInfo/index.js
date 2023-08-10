@@ -3,11 +3,13 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { SetLoader } from "../../redux/loaderSlice";
 import { GetProductById } from "../../apicalls/products";
-import { Divider, message } from "antd";
+import { Button, Divider, message } from "antd";
 import moment from "moment";
+import BidModal from "./BidModal";
 
 const ProductInfo = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [showAddNewBid, setShowAddNewBid] = useState(false);
   const [products, setProducts] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,11 +62,11 @@ const ProductInfo = () => {
                 );
               })}
             </div>
-            <Divider/>
+            <Divider />
             <div>
               <h1 className="text-gray-600">Added On</h1>
               <span className="text-gray-600">
-                {moment(products.createdAt).format('MMM-DD-YYYY hh:mm A')}
+                {moment(products.createdAt).format("MMM-DD-YYYY hh:mm A")}
               </span>
             </div>
           </div>
@@ -124,10 +126,26 @@ const ProductInfo = () => {
                 <span>{products.seller.email}</span>
               </div>
             </div>
-
+            <Divider />
+            <div className="flex flex-col">
+              <div className="flex justify-between">
+                <h1 className="text-2xl font-semibold text-orange-900">Bids</h1>
+                <Button onClick={() => setShowAddNewBid(!showAddNewBid)}>
+                  New Bid
+                </Button>
+              </div>
+            </div>
           </div>
-        
         </div>
+
+        {showAddNewBid && (
+          <BidModal
+            products={products}
+            reloadData={getData}
+            showAddNewBid={showAddNewBid}
+            setShowAddNewBid={setShowAddNewBid}
+          />
+        )}
       </div>
     )
   );
