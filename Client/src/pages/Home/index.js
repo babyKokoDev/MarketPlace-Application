@@ -10,6 +10,8 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     status: "approved",
+    category : [],
+    age : []
   });
   const [showFilters, setShowFilters] = useState(true);
   const { user } = useSelector((state) => state.users);
