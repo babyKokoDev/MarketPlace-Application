@@ -44,6 +44,7 @@ const Home = () => {
           setShowFilters={setShowFilters}
           filters={filters}
           setFilters={setFilters}
+          getData={getData}
         />
       )}
       <div className="flex flex-col gap-5">
@@ -57,7 +58,7 @@ const Home = () => {
           <input
             type="text"
             placeholder="Search Products here..."
-            className="border border-gray-300 rounded border-solid w-full p-2 h-14"
+            className="border border-gray-300 rounded border-solid w-full px-2 py-1 h-14"
           />
         </div>
         <div

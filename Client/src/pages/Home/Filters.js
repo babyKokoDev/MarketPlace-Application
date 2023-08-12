@@ -48,13 +48,13 @@ const ages = [
 
 
 
-const Filters = ({ showFilters, setShowFilters, filters, setFilters }) => {
+const Filters = ({ showFilters, setShowFilters, filters, setFilters, getData }) => {
 
-  // useEffect(()=>{
-  //     console.log(filters)
-  // }, [filters])
+  useEffect(()=>{
+      getData()
+  }, [filters])
 
-  
+
   return (
     <div className="w-72 flex flex-col">
       <div className="flex justify-between items-center">

@@ -19,13 +19,16 @@ const addProducts = async (req, res) => {
 
 const getProducts = async (req, res) => {
     try {
-        const {seller, categories = [], age = [], status} = req.body
+        const {seller, category = [], age = [], status} = req.body
         let filters = {}
         if (seller){
           filters.seller = seller
         }
         if (status){
           filters.status = status
+        }
+        if (category.length > 0){
+          filters.category = { $in: category}
         }
         const products = await Product.find(filters).populate('seller').sort({ createdAt: -1 })
         res.send({
