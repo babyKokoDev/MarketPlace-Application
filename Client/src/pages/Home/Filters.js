@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const categories = [
   {
@@ -46,7 +46,15 @@ const ages = [
   },
 ];
 
+
+
 const Filters = ({ showFilters, setShowFilters, filters, setFilters }) => {
+
+  // useEffect(()=>{
+  //     console.log(filters)
+  // }, [filters])
+
+  
   return (
     <div className="w-72 flex flex-col">
       <div className="flex justify-between items-center">
@@ -83,6 +91,37 @@ const Filters = ({ showFilters, setShowFilters, filters, setFilters }) => {
                         className="max-width"
                         />
                         <label htmlFor="category">{category.name}</label>
+                    </div>
+                     
+                )
+            })}
+         
+        </div>
+        <h1 className="text-gray-600 mt-2">Age</h1>
+
+        <div className="flex flex-col gap-1">
+            {ages.map((age)=> {
+                return (
+                    <div className="flex items-center gap-2">
+                       <input 
+                     type="checkbox" 
+                     name="age"
+                     checked={filters.age.includes(age.value)}
+                     onChange={(e) => {
+                        if (e.target.checked){
+                            setFilters({...filters, age : [...filters.age, age.value], })
+                        } else {
+                            setFilters({
+                                ...filters,
+                                age: filters.age.filter(
+                                    (item) => item !== age.value
+                                )
+                            })
+                        }
+                        }} 
+                        className="max-width"
+                        />
+                        <label htmlFor="category">{age.name}</label>
                     </div>
                      
                 )
