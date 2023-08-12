@@ -47,7 +47,7 @@ const Home = () => {
           getData={getData}
         />
       )}
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 w-full">
         <div className="flex gap-5 items-center">
           {!showFilters && (
             <i
