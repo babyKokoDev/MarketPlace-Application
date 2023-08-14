@@ -5,9 +5,13 @@ import "remixicon/fonts/remixicon.css";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../redux/loaderSlice";
 import { SetUsers } from "../redux/userSlice";
+import { Avatar, Badge, Space } from "antd";
+import Notifications from "./Notifications";
 
 const ProtectedPage = ({ children }) => {
   const { user } = useSelector((state) => state.users);
+  const [notifications, setNotifications] = useState([])
+  const [showNotifications, setShowNotifications] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -42,7 +46,6 @@ const ProtectedPage = ({ children }) => {
             <h1 className="text-2xl text-white">MARKET PLACE</h1>
           </Link>
           <div className="bg-white py-2 px-5 flex rounded gap-1 items-center">
-            <i className="ri-user-3-fill cursor-pointer"></i>
             <span
               onClick={() => {
                 if (user.role === "user") {
@@ -55,6 +58,9 @@ const ProtectedPage = ({ children }) => {
             >
               {user.name}
             </span>
+            <Badge count={notifications?.filter((notification)=> !notification.read).length} onClick={()=>setShowNotifications(true)} className="cursor-pointer">
+              <Avatar shape="circle" icon={<i className="ri-notification-3-line" />}/>
+            </Badge>
             <i
               className="ri-logout-box-r-line ml-10 cursor-pointer"
               onClick={() => {
@@ -67,6 +73,13 @@ const ProtectedPage = ({ children }) => {
 
         {/* Body */}
         <div className="p-5">{children}</div>
+        {
+          <Notifications
+          notifications={notifications}
+          reloadNotifications={setNotifications}
+          showNotifications={showNotifications}
+          setShowNotifications={setShowNotifications} />
+        }
       </div>
     )
   );

@@ -16,6 +16,10 @@ const notificationSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'users'
     },
+    read : {
+        type : Boolean,
+        default : false
+    }
 
 },{timestamps : true})
 

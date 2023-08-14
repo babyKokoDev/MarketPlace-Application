@@ -1,4 +1,4 @@
-const { postNotification, getNotification, deleteNotification } = require('../controllers/notificationController')
+const { postNotification, getNotification, deleteNotification, readAllNotifications } = require('../controllers/notificationController')
 const authMiddleware = require('../middleware/authMiddleware')
 const router = require('express').Router()
 
@@ -10,5 +10,8 @@ router.get('/get-all-notifications', authMiddleware, getNotification)
 
 // Delete Notification
 router.delete('/delete-notification', authMiddleware, deleteNotification)
+
+// Read all notifications
+router.put('/read-all-notifications', authMiddleware, readAllNotifications)
 
 module.exports = router

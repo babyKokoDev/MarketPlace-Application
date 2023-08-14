@@ -50,8 +50,23 @@ const deleteNotification = async (req, res) => {
     }
 }
 
+const readAllNotifications = async (req, res) => {
+  try {
+         await notification.updateMany(
+          {user : req.body.userId, read : false},
+          {$set : {read : true}},
+         )
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
 module.exports = {
   postNotification,
   getNotification,
-  deleteNotification
+  deleteNotification,
+  readAllNotifications,
 };
