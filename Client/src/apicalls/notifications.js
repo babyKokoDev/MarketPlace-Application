@@ -1,8 +1,8 @@
 import { axiosInstance } from "./axiosInstance";
 
 
-// add new Notifcation
-export const Addnotification = async (data) => {
+// add new Notification
+export const AddNotification = async (data) => {
       try {
         const response = await axiosInstance.post('/api/notifications/notify', data)
         return response.data

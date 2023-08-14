@@ -3,7 +3,7 @@ const notification = require("../models/notification");
 const postNotification = async (req, res) => {
   try {
     const newNotification = new notification(req.body);
-    await newNotification.save;
+    await newNotification.save();
     res.send({
       success: true,
       message: "Notification added successfully",
@@ -25,7 +25,7 @@ const getNotification = async (req, res) => {
       .sort({ createdAt: -1 });
     res.send({
       success: true,
-      notifications,
+      data : notifications,
     });
   } catch (error) {
     res.send({

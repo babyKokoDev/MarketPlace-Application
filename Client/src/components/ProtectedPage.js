@@ -5,8 +5,9 @@ import "remixicon/fonts/remixicon.css";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../redux/loaderSlice";
 import { SetUsers } from "../redux/userSlice";
-import { Avatar, Badge, Space } from "antd";
+import { Avatar, Badge, Space, message } from "antd";
 import Notifications from "./Notifications";
+import { GetNotifications } from "../apicalls/notifications";
 
 const ProtectedPage = ({ children }) => {
   const { user } = useSelector((state) => state.users);
@@ -29,9 +30,26 @@ const ProtectedPage = ({ children }) => {
     }
   };
 
+  const getNotification = async () => {
+    try {
+      dispatch(SetLoader(true));
+      const response = await GetNotifications()
+      dispatch(SetLoader(false));
+      if (response.success){
+        setNotifications(response.data)
+      }else {
+        throw new Error(response.message)
+      }
+    } catch (error) {
+      dispatch(SetLoader(false));
+      message.error(error.message)
+    }
+  }
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       validateToken();
+      getNotification()
     } else {
       navigate("/login");
     }
