@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { SetLoader } from "../../../redux/loaderSlice";
 import { GetAllBids } from "../../../apicalls/products";
 import moment from "moment";
-import Divider from '../../../components/Divider'
 
-const Bids = ({ showBidsModal, setShowBidsModal, selectedProduct }) => {
+const Bids = () => {
   const [bidsData, setBidsData] = useState([]);
   const dispatch = useDispatch();
+  const { user } = useSelector((state)=> state.users)
   const getData = async () => {
     try {
       dispatch(SetLoader(true));
       const response = await GetAllBids({
-        product: selectedProduct._id,
+        buyer : user._id,
       });
       dispatch(SetLoader(false));
       if (response.success) {
@@ -27,6 +27,13 @@ const Bids = ({ showBidsModal, setShowBidsModal, selectedProduct }) => {
 
   const columns = [
     {
+        title : 'Product',
+        dataIndex : 'product',
+        render : (text, record) => {
+            return record.product.name
+        }
+    },
+    {
       title : 'Bid Placed On',
       dataIndex : 'CreatedAt',
       render : (text, record) => {
@@ -34,10 +41,17 @@ const Bids = ({ showBidsModal, setShowBidsModal, selectedProduct }) => {
       }
     },
     {
-      title : 'Name',
-      dataIndex : 'name',
+      title : 'Seller',
+      dataIndex : 'seller',
       render : (text, record) => {
-        return record.buyer.name
+        return record.seller.name
+      }
+    },
+    {
+      title : 'Offered Price',
+      dataIndex : 'offeredPrice',
+      render : (text, record) => {
+        return record.product.price
       }
     },
     {
@@ -65,21 +79,9 @@ const Bids = ({ showBidsModal, setShowBidsModal, selectedProduct }) => {
   }, [])
   
   return (
-    <Modal
-      open={showBidsModal}
-      onCancel={() => setShowBidsModal(false)}
-      centered
-      width={1500}
-      footer={null}
-    >
       <div className="flex gap-3 flex-col">
-      <h1 className=" text-primary">Bids</h1>
-        <Divider />
-      <h1 className="text-xl text-primary">Product Name : {selectedProduct.name}</h1>
       <Table columns={columns} dataSource={bidsData} />
       </div>
-     
-    </Modal>
   );
 };
 
