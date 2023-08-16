@@ -9,7 +9,7 @@ router.post('/notify', authMiddleware, postNotification)
 router.get('/get-all-notifications', authMiddleware, getNotification)
 
 // Delete Notification
-router.delete('/delete-notification', authMiddleware, deleteNotification)
+router.delete('/delete-notification/:id', authMiddleware, deleteNotification)
 
 // Read all notifications
 router.put('/read-all-notifications', authMiddleware, readAllNotifications)

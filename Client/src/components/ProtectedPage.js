@@ -7,12 +7,12 @@ import { SetLoader } from "../redux/loaderSlice";
 import { SetUsers } from "../redux/userSlice";
 import { Avatar, Badge, Space, message } from "antd";
 import Notifications from "./Notifications";
-import { GetNotifications } from "../apicalls/notifications";
+import { GetNotifications, ReadAllNotifications } from "../apicalls/notifications";
 
 const ProtectedPage = ({ children }) => {
   const { user } = useSelector((state) => state.users);
-  const [notifications, setNotifications] = useState([])
-  const [showNotifications, setShowNotifications] = useState(false)
+  const [notifications, setNotifications] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,24 +32,34 @@ const ProtectedPage = ({ children }) => {
 
   const getNotification = async () => {
     try {
-      dispatch(SetLoader(true));
-      const response = await GetNotifications()
-      dispatch(SetLoader(false));
-      if (response.success){
-        setNotifications(response.data)
+      const response = await GetNotifications();
+      if (response.success) {
+        setNotifications(response.data);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
+  const readNotifications = async () => {
+    try {
+      const response = await ReadAllNotifications()
+      if (response.success) {
+        getNotification()
       }else {
         throw new Error(response.message)
       }
     } catch (error) {
-      dispatch(SetLoader(false));
-      message.error(error.message)
+      message.error(error.message);
     }
   }
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       validateToken();
-      getNotification()
+      getNotification();
     } else {
       navigate("/login");
     }
@@ -76,8 +86,21 @@ const ProtectedPage = ({ children }) => {
             >
               {user.name}
             </span>
-            <Badge count={notifications?.filter((notification)=> !notification.read).length} onClick={()=>setShowNotifications(true)} className="cursor-pointer">
-              <Avatar shape="circle" icon={<i className="ri-notification-3-line" />}/>
+            <Badge
+              count={
+                notifications?.filter((notification) => !notification.read)
+                  .length
+              }
+              onClick={() => {
+                readNotifications()
+                setShowNotifications(true);
+              }}
+              className="cursor-pointer"
+            >
+              <Avatar
+                shape="circle"
+                icon={<i className="ri-notification-3-line" />}
+              />
             </Badge>
             <i
               className="ri-logout-box-r-line ml-10 cursor-pointer"
@@ -93,10 +116,11 @@ const ProtectedPage = ({ children }) => {
         <div className="p-5">{children}</div>
         {
           <Notifications
-          notifications={notifications}
-          reloadNotifications={setNotifications}
-          showNotifications={showNotifications}
-          setShowNotifications={setShowNotifications} />
+            notifications={notifications}
+            reloadNotifications={getNotification}
+            showNotifications={showNotifications}
+            setShowNotifications={setShowNotifications}
+          />
         }
       </div>
     )

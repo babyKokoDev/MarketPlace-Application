@@ -56,6 +56,10 @@ const readAllNotifications = async (req, res) => {
           {user : req.body.userId, read : false},
           {$set : {read : true}},
          )
+         res.send({
+          success : true,
+          message : 'All notifications marked as red'
+         })
   } catch (error) {
     res.send({
       success: false,
