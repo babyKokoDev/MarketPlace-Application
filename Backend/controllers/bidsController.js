@@ -26,7 +26,7 @@ const getBids = async (req, res) => {
         if (seller) {
             filters.seller = seller
         }
-        const bids = await Bids.find(filters).populate('product').populate('buyer').populate('seller')
+        const bids = await Bids.find(filters).populate('product').populate('buyer').populate('seller').sort({ createdAt: -1 }) 
         res.send({
             success: true,
             data : bids

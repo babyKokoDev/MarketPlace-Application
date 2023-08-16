@@ -68,7 +68,7 @@ const Filters = ({ showFilters, setShowFilters, filters, setFilters, getData }) 
       <div className="flex flex-col gap-1 mt-5">
         <h1 className="text-gray-600">Categories</h1>
 
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col">
             {categories.map((category)=> {
                 return (
                     <div className="flex items-center gap-2">
@@ -99,7 +99,7 @@ const Filters = ({ showFilters, setShowFilters, filters, setFilters, getData }) 
         </div>
         <h1 className="text-gray-600 mt-2">Age</h1>
 
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col">
             {ages.map((age)=> {
                 return (
                     <div className="flex items-center gap-2">

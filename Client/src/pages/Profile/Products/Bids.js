@@ -27,6 +27,13 @@ const Bids = ({ showBidsModal, setShowBidsModal, selectedProduct }) => {
 
   const columns = [
     {
+      title : 'Bid Placed On',
+      dataIndex : 'CreatedAt',
+      render : (text, record) => {
+         return moment(text).format('DD-MM-YYYY hh:mm a');
+      }
+    },
+    {
       title : 'Name',
       dataIndex : 'name',
       render : (text, record) => {

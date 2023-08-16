@@ -83,7 +83,7 @@ const Home = () => {
 
                 <div className="px-2 flex-col gap-1">
                   <h1 className="text-lg font-semibold">{product.name}</h1>
-                  <p className="text-sm">{product.description}</p>
+                  <p className="text-sm">{product.age}{product.age === 1 ? ' year ' : ' years '} Old</p>
                   <Divider />
                   <span className="text-xl font-semibold text-green-700">
                     ${product.price}

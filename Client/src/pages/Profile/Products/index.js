@@ -12,13 +12,13 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showBids, setShowBids] = useState(false);
   const [products, setProducts] = useState([]);
-  const { user } = useSelector((state)=> state.users)
+  const { user } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   const getData = async () => {
     try {
       dispatch(SetLoader(true));
-      const response = await getProducts({seller : user._id});
+      const response = await getProducts({ seller: user._id });
       if (response.success) {
         setProducts(response.products);
         dispatch(SetLoader(false));
@@ -52,12 +52,21 @@ const Products = () => {
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "Product",
+      dataIndex: "image",
+      render: (text, record) => {
+        return (
+          <img
+            src={record?.images?.length > 0 ? record.images[0] : ""}
+            alt=""
+            className="w-14 h-14 object-cover rounded-md"
+          />
+        );
+      },
     },
     {
-      title: "Description",
-      dataIndex: "description",
+      title: "Name",
+      dataIndex: "name",
     },
     {
       title: "Price",
@@ -78,7 +87,8 @@ const Products = () => {
     {
       title: "Added On",
       dataIndex: "createdAt",
-      render : (text, record) => moment(record.createdAt).format("DD-MM-YYYY hh:mm A")
+      render: (text, record) =>
+        moment(record.createdAt).format("DD-MM-YYYY hh:mm A"),
     },
     {
       title: "Action",
@@ -97,10 +107,15 @@ const Products = () => {
                 setShowProductsForm(true);
               }}
             ></i>
-            <span className="underline cursor-pointer" onClick={()=> {
-              setSelectedProduct(record)
-              setShowBids(true)
-            }}>Show Bids</span>
+            <span
+              className="underline cursor-pointer"
+              onClick={() => {
+                setSelectedProduct(record);
+                setShowBids(true);
+              }}
+            >
+              Show Bids
+            </span>
           </div>
         );
       },
@@ -128,11 +143,13 @@ const Products = () => {
           getData={getData}
         />
       )}
-      {
-        showBids && (
-          <Bids showBidsModal={showBids} setShowBidsModal={setShowBids} selectedProduct={selectedProduct} />
-        )
-      }
+      {showBids && (
+        <Bids
+          showBidsModal={showBids}
+          setShowBidsModal={setShowBids}
+          selectedProduct={selectedProduct}
+        />
+      )}
     </div>
   );
 };
