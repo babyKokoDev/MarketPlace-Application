@@ -25,6 +25,9 @@ const Profile = () => {
               Email : <b className="text-2xl">{user.email}</b>
             </span>
             <span className="text-primary text-xl flex justify-between mb-3">
+              Role : <b className="text-2xl">{user.role}</b>
+            </span>
+            <span className="text-primary text-xl flex justify-between mb-3">
               Created At  :{" "} <b className="text-2xl">{moment(user.createdAt).format('MMM D , YYYY hh:mm A')}</b>
             </span>
           </div>
