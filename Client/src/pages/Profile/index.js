@@ -19,16 +19,16 @@ const Profile = () => {
         <Tabs.TabPane tab="General" key="3">
           <div className="flex flex-col w-1/3">
             <span className="text-gray-500 text-xl flex justify-between mb-3">
-              Name : <b className="text-2xl">{user.name}</b>
+              Name : <b className="text-xl">{user.name}</b>
             </span>
             <span className="text-gray-500 text-xl flex justify-between mb-3">
-              Email : <b className="text-2xl">{user.email}</b>
+              Email : <b className="text-xl">{user.email}</b>
             </span>
             <span className="text-gray-500 text-xl flex justify-between mb-3">
-              Role : <b className="text-2xl">{user.role}</b>
+              Role : <b className="text-xl">{user.role}</b>
             </span>
             <span className="text-gray-500 text-xl flex justify-between mb-3">
-              Created At  :{" "} <b className="text-2xl">{moment(user.createdAt).format('MMM D , YYYY hh:mm A')}</b>
+              Created At  :{" "} <b className="text-xl">{moment(user.createdAt).format('MMM D , YYYY hh:mm A')}</b>
             </span>
           </div>
         </Tabs.TabPane>
